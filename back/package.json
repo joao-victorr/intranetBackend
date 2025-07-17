@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "dev-migrate": "npx prisma migrate dev",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate deploy",
+    "build": "npx prisma generate && tsc --project tsconfig.json",
+    "lint": "biome check"
   },
   "author": "",
   "license": "ISC",
