@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:3000" # Mapeia a porta 3000 do host para a porta 3000 do contêiner
     env_file:
-      - ./back/.env.backend # Caminho para o arquivo .env do backend
+      - ./back/.backend.env # Caminho para o arquivo .env do backend
     depends_on:
       - database # Garante que o banco de dados seja iniciado antes do backend
     networks:
@@ -22,7 +22,7 @@ services:
   #   # ports:
   #   #   - "80:80"
   #   env_file:
-  #     - ./front/.env.frontend # Opcional: Se o frontend precisar de variáveis de ambiente via .env
+  #     - ./front/.frontend.env # Opcional: Se o frontend precisar de variáveis de ambiente via .env
   #   depends_on:
   #     - backend # Opcional: Garante que o backend seja iniciado antes do frontend
   #   networks:
@@ -33,7 +33,7 @@ services:
   database:
     image: postgres:13 # Usamos uma versão específica do PostgreSQL para consistência
     env_file:
-      - ./database/.env.database # Caminho para o arquivo .env do banco de dados
+      - ./database/.database.env # Caminho para o arquivo .env do banco de dados
     volumes:
       - db_data:/var/lib/postgresql/data # Volume persistente para os dados do banco de dados
     networks:
