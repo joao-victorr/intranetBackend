@@ -1,0 +1,52 @@
+services:
+  # Serviço para o seu Backend Node.js
+  backend:
+    build:
+      context: ./back # Caminho para a pasta onde está o Dockerfile do seu backend
+      dockerfile: Dockerfile # Nome do Dockerfile dentro da pasta 'back'
+    ports:
+      - "3000:3000" # Mapeia a porta 3000 do host para a porta 3000 do contêiner
+    env_file:
+      - ./back/.env.backend # Caminho para o arquivo .env do backend
+    depends_on:
+      - database # Garante que o banco de dados seja iniciado antes do backend
+    networks:
+      - app-network # Conecta o backend à rede compartilhada
+
+  # Serviço para o Frontend (Aplicativo React servido por Nginx)
+  # frontend:
+  #   build:
+  #     context: ./front # Caminho para a pasta onde está o Dockerfile do seu frontend React/Nginx
+  #     dockerfile: Dockerfile # Nome do Dockerfile dentro da pasta 'front'
+  #   # Não precisamos mais expor a porta 80 aqui, pois o proxy reverso fará isso
+  #   # ports:
+  #   #   - "80:80"
+  #   env_file:
+  #     - ./front/.env.frontend # Opcional: Se o frontend precisar de variáveis de ambiente via .env
+  #   depends_on:
+  #     - backend # Opcional: Garante que o backend seja iniciado antes do frontend
+  #   networks:
+  #     - app-network # Conecta o frontend à rede compartilhada principal do stack
+  #     - nginx-proxy # Adiciona o frontend à rede 'nginx-proxy' para ser acessível pelo proxy reverso
+
+  # Serviço para o Banco de Dados PostgreSQL
+  database:
+    image: postgres:13 # Usamos uma versão específica do PostgreSQL para consistência
+    env_file:
+      - ./database/.env.database # Caminho para o arquivo .env do banco de dados
+    volumes:
+      - db_data:/var/lib/postgresql/data # Volume persistente para os dados do banco de dados
+    networks:
+      - app-network # Conecta o banco de dados à rede compartilhada
+    # restart: unless-stopped # Opcional: Política de reinício para produção
+
+# Definição dos volumes persistentes
+volumes:
+  db_data: # Volume para os dados do PostgreSQL
+
+# Definição das redes
+networks:
+  app-network:
+    driver: overlay # O driver 'overlay' é necessário para comunicação entre serviços em um cluster Swarm
+  nginx-proxy-net:
+    external: true # Indica que esta rede já existe e não deve ser criada pelo stack

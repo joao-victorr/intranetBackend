@@ -6,7 +6,7 @@ import { jsonSchemaTransform, serializerCompiler, validatorCompiler, type ZodTyp
 import { ErrorsHandler } from "./Domain/Errors/ErrorsHandler";
 
 
-const _PORT = process.env.PORT ?? 3000;
+const _PORT = 3000;
 const isProd = process.env.NODE_ENV === 'production';
 
 
@@ -70,7 +70,7 @@ server.setErrorHandler(ErrorsHandler);
 Routes(server);
 
 
-server.listen({ port: Number(_PORT) }, (err, address) => {
+server.listen({ port: _PORT }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
