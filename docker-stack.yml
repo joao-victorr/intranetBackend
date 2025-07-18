@@ -1,13 +1,11 @@
 services:
   # Serviço para o seu Backend Node.js
   backend:
-    build:
-      context: ./back # Caminho para a pasta onde está o Dockerfile do seu backend
-      dockerfile: Dockerfile # Nome do Dockerfile dentro da pasta 'back'
+    image: intranet-back:latest
     ports:
       - "3000:3000" # Mapeia a porta 3000 do host para a porta 3000 do contêiner
     env_file:
-      - ./back/.backend.env # Caminho para o arquivo .env do backend
+      - .back.env # Caminho para o arquivo .env do backend
     depends_on:
       - database # Garante que o banco de dados seja iniciado antes do backend
     networks:
@@ -15,14 +13,12 @@ services:
 
   # Serviço para o Frontend (Aplicativo React servido por Nginx)
   # frontend:
-  #   build:
-  #     context: ./front # Caminho para a pasta onde está o Dockerfile do seu frontend React/Nginx
-  #     dockerfile: Dockerfile # Nome do Dockerfile dentro da pasta 'front'
+      #image: intranet-front:latest
   #   # Não precisamos mais expor a porta 80 aqui, pois o proxy reverso fará isso
   #   # ports:
   #   #   - "80:80"
   #   env_file:
-  #     - ./front/.frontend.env # Opcional: Se o frontend precisar de variáveis de ambiente via .env
+  #     - .front.env # Opcional: Se o frontend precisar de variáveis de ambiente via .env
   #   depends_on:
   #     - backend # Opcional: Garante que o backend seja iniciado antes do frontend
   #   networks:
@@ -33,7 +29,7 @@ services:
   database:
     image: postgres:13 # Usamos uma versão específica do PostgreSQL para consistência
     env_file:
-      - ./database/.database.env # Caminho para o arquivo .env do banco de dados
+      - .database.env # Caminho para o arquivo .env do banco de dados
     volumes:
       - db_data:/var/lib/postgresql/data # Volume persistente para os dados do banco de dados
     networks:
