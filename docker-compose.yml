@@ -1,7 +1,10 @@
 services:
   # Serviço para o seu Backend Node.js
   backend:
-    image: intranet-back:latest
+    # image: intranet-back:latest
+    build:
+      context: ./back
+      dockerfile: Dockerfile
     ports:
       - "3000:3000" # Mapeia a porta 3000 do host para a porta 3000 do contêiner
     env_file:
@@ -10,6 +13,7 @@ services:
       - database # Garante que o banco de dados seja iniciado antes do backend
     networks:
       - app-network # Conecta o backend à rede compartilhada
+      - nginx-proxy-net
 
   # Serviço para o Frontend (Aplicativo React servido por Nginx)
   # frontend:
@@ -23,15 +27,16 @@ services:
   #     - backend # Opcional: Garante que o backend seja iniciado antes do frontend
   #   networks:
   #     - app-network # Conecta o frontend à rede compartilhada principal do stack
-  #     - nginx-proxy # Adiciona o frontend à rede 'nginx-proxy' para ser acessível pelo proxy reverso
+  #     - nginx-proxy-net # Adiciona o frontend à rede 'nginx-proxy' para ser acessível pelo proxy reverso
 
   # Serviço para o Banco de Dados PostgreSQL
   database:
-    image: postgres:13 # Usamos uma versão específica do PostgreSQL para consistência
+    # image: postgres:13 # Usamos uma versão específica do PostgreSQL para consistência
+    image: postgres:13
     env_file:
       - .database.env # Caminho para o arquivo .env do banco de dados
     volumes:
-      - db_data:/var/lib/postgresql/data # Volume persistente para os dados do banco de dados
+      - ./db_data:/var/lib/postgresql/data # Volume persistente para os dados do banco de dados
     networks:
       - app-network # Conecta o banco de dados à rede compartilhada
     # restart: unless-stopped # Opcional: Política de reinício para produção
@@ -43,6 +48,6 @@ volumes:
 # Definição das redes
 networks:
   app-network:
-    driver: overlay # O driver 'overlay' é necessário para comunicação entre serviços em um cluster Swarm
+    driver: bridge # O driver 'overlay' é necessário para comunicação entre serviços em um cluster Swarm
   nginx-proxy-net:
     external: true # Indica que esta rede já existe e não deve ser criada pelo stack
