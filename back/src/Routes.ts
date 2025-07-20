@@ -6,8 +6,8 @@ import { UsersRoutes } from "Aplications/Routes/UsersRoutes";
 
 
 export const Routes = async (server: FastifyTypedInstance) => {
- await server.register(AuthRoutes, { prefix: "/auth" });
- await server.register(UsersRoutes, { prefix: "/users" });
+ await server.register(AuthRoutes, { prefix: "/api/auth" });
+ await server.register(UsersRoutes, { prefix: "/api/users" });
 
 
 }
