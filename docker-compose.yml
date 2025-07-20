@@ -10,7 +10,7 @@ services:
     env_file:
       - .back.env # Caminho para o arquivo .env do backend
     depends_on:
-      - database # Garante que o banco de dados seja iniciado antes do backend
+      - intranet-database # Garante que o banco de dados seja iniciado antes do backend
     networks:
       - app-network # Conecta o backend à rede compartilhada
       - nginx-proxy-net
@@ -24,7 +24,7 @@ services:
   #   env_file:
   #     - .front.env # Opcional: Se o frontend precisar de variáveis de ambiente via .env
   #   depends_on:
-  #     - backend # Opcional: Garante que o backend seja iniciado antes do frontend
+  #     - intranet-backend # Opcional: Garante que o backend seja iniciado antes do frontend
   #   networks:
   #     - app-network # Conecta o frontend à rede compartilhada principal do stack
   #     - nginx-proxy-net # Adiciona o frontend à rede 'nginx-proxy' para ser acessível pelo proxy reverso
