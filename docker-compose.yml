@@ -1,6 +1,6 @@
 services:
   # Serviço para o seu Backend Node.js
-  backend:
+  intranet-backend:
     # image: intranet-back:latest
     build:
       context: ./back
@@ -16,7 +16,7 @@ services:
       - nginx-proxy-net
 
   # Serviço para o Frontend (Aplicativo React servido por Nginx)
-  # frontend:
+  # intranet-frontend:
       #image: intranet-front:latest
   #   # Não precisamos mais expor a porta 80 aqui, pois o proxy reverso fará isso
   #   # ports:
@@ -30,7 +30,7 @@ services:
   #     - nginx-proxy-net # Adiciona o frontend à rede 'nginx-proxy' para ser acessível pelo proxy reverso
 
   # Serviço para o Banco de Dados PostgreSQL
-  database:
+  intranet-database:
     # image: postgres:13 # Usamos uma versão específica do PostgreSQL para consistência
     image: postgres:13
     env_file:
