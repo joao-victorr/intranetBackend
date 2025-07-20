@@ -1,4 +1,5 @@
 import { Routes } from "Routes";
+import fastifyCors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { fastify } from "fastify";
@@ -15,7 +16,7 @@ const server = fastify({ logger: {
   transport: {
     target: 'pino-pretty',
     options: {
-      colarize: true,
+      colorize: true,
       translateTime: 'SYS:standard',
       ignore: 'pid,hostname'
     }
@@ -35,13 +36,13 @@ server.register(fastifySwagger, {
     servers: isProd ?
     [
       {
-        url: "https://localhost:3000",
+        url: "https://souperdomo.perdomodoces.com.br",
         description: "Desenvolvimento"
       }
     ] :
     [
       {
-        url: "https://localhost:3000",
+        url: "http://0.0.0.0:3000",
         description: "Desenvolvimento"
       }
     ],
@@ -64,13 +65,16 @@ server.register(fastifySwaggerUi, {
   routePrefix: "/docs"
 })
 
+server.register(fastifyCors, {
+  origin: "*"
+})
 
 server.setErrorHandler(ErrorsHandler);
 
 Routes(server);
 
 
-server.listen({ port: _PORT }, (err, address) => {
+server.listen({ port: _PORT, host: "0.0.0.0" }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);

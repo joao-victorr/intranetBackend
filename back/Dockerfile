@@ -25,7 +25,7 @@
   WORKDIR /back
   
   # Define o ambiente do Node.js como produção para otimizações
-  ENV NODE_ENV=production
+  # ENV NODE_ENV=production
   
   # Copia apenas os arquivos necessários do estágio de build
   COPY --from=builder /back/dist ./dist
