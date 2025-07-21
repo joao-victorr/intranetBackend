@@ -1,10 +1,13 @@
 import type { FastifyTypedInstance } from "@Types/Fastify";
 import { LoginController } from "Aplications/Controller/Auth/LoginController";
+import { RefreshTokenController } from "Aplications/Controller/Auth/RefreshTokenController";
 import { LoginReplySchema, LoginRequestSchema } from "DTOs/Auth/LoginDTO";
+import { RefreshTokenReplySchema, RefreshTokenRequestSchema } from "DTOs/Auth/RefreshTokenDTO";
 import { UnauthorizedSchema } from "DTOs/Global/ErrorsDTO";
 
 
 const loginController = new LoginController()
+const refreshTokenController = new RefreshTokenController();
 
 
 export const AuthRoutes = async (server: FastifyTypedInstance) => {
@@ -24,5 +27,23 @@ export const AuthRoutes = async (server: FastifyTypedInstance) => {
       }
     },
     loginController.handle
+  );
+
+  server.post(
+    "/refrash-token",
+    {
+      schema: {
+        tags: ['Auth'],
+        operationId: "Auth.RefrashToken",  
+        summary: "Refash Token User",
+        description: "Authenticate user with refrash token. Returns JWT token on success.",
+        body: RefreshTokenRequestSchema,
+        response: {
+          200: RefreshTokenReplySchema,
+          401: UnauthorizedSchema
+        }
+      }
+    },
+    refreshTokenController.handle
   );
 };

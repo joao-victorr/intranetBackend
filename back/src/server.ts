@@ -1,3 +1,4 @@
+import { EnvConfig } from "@Infrastructure/Config/envConfig";
 import { Routes } from "Routes";
 import fastifyCors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
@@ -8,7 +9,7 @@ import { ErrorsHandler } from "./Domain/Errors/ErrorsHandler";
 
 
 const _PORT = 3000;
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = EnvConfig.NODE_ENV === "production";
 
 
 const server = fastify({ logger: {
@@ -44,6 +45,10 @@ server.register(fastifySwagger, {
       {
         url: "http://0.0.0.0:3000",
         description: "Desenvolvimento"
+      },
+      {
+        url: "https://0.0.0.0:3000",
+        description: "Desenvolvimento"
       }
     ],
     components: {
@@ -62,7 +67,7 @@ server.register(fastifySwagger, {
 })
 
 server.register(fastifySwaggerUi, {
-  routePrefix: "/docs"
+  routePrefix: "/api/docs"
 })
 
 server.register(fastifyCors, {

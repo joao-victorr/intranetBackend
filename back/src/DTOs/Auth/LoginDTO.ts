@@ -10,10 +10,13 @@ export type LoginRequestDTO = z.infer<typeof LoginRequestSchema>
 
 export const LoginReplySchema = z.object({
   token: z.string(),
-  user: z.object({
+  refreshToken: z.object({
     id: z.string().uuid(),
-    name: z.string(),
-    username: z.string()
+    userId: z.string().uuid(),
+    expiresAt: z.coerce.string().datetime().transform((str) => String(str)), // <--- MUDANÇA AQUI
+    createdAt: z.coerce.string().datetime().transform((str) => String(str)),
+    isRevoked: z.boolean()
   })
 });
+
 export type LoginReplyDTO = z.infer<typeof LoginReplySchema>;

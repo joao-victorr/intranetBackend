@@ -32,16 +32,24 @@ export class LoginService {
       throw new UnauthorizedError(mensageError)
     }
 
-    const token = signToken({sub: user.id})
+    const token = signToken({sub: user.id});
 
+    
+    const sevenDayInMillisecond = 604800000 //7 dias em milesegundos
+    const newExpiresAt = new Date(Date.now() + sevenDayInMillisecond);
+
+    const refreshToken = await repo.session.create({
+      data: {
+        userId: user.id,
+        isRevoked: false,
+        expiresAt: newExpiresAt,
+        createdAt: new Date(),
+      }
+    })
+    
     return {
       token,
-      user: {
-        id: user.id,
-        name: user.name,
-        username: user.username,
-        birthDate: user.birthDate
-      }
+      refreshToken
     }
 
 

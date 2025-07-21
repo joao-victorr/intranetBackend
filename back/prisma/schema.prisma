@@ -14,10 +14,23 @@ datasource db {
 }
 
 model User {
-  id        String   @id @unique @default(uuid())
-  surname   String
+  id        String   @id @default(uuid())
   name      String
+  surname   String
   username  String   @unique
   password  String
   birthDate DateTime
+
+  sessionTimeout Int
+  Sessions       Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  isRevoked Boolean  @default(false)
+
+  User User @relation(fields: [userId], references: [id])
 }

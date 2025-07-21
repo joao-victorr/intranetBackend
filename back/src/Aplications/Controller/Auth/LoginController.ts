@@ -9,6 +9,7 @@ export class LoginController {
 
     const service = new LoginService();
     const auth = await service.execute({ username, password });
+    console.log(auth)
     return reply.code(200).send(auth);
   }
 }

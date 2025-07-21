@@ -5,10 +5,6 @@ import { hashPassword } from "Infrastructure/Security/EncryptionUtilit";
 
 
 
-
-
-
-
 export class CreateUserService {
   async execut(user: CreateUserRequestDTO): Promise<CreateUserReplyDTO> {
     
@@ -24,14 +20,16 @@ export class CreateUserService {
     }
 
     const passwordhash = await hashPassword(user.password);
-
+    const defaultSessionTimeoutInMilliseconds = 604800000;
     const newUser = await repo.user.create({
       data: {
         name: user.name,
         surname: user.surname,
         username: user.username,
         password: passwordhash,
-        birthDate: user.birthDate
+        birthDate: user.birthDate,
+        sessionTimeout: user.sessionTimeout ?? defaultSessionTimeoutInMilliseconds
+
       },
       omit: {
         password: true

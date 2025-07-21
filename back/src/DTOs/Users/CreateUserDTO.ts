@@ -8,7 +8,8 @@ export const CreateUserRequestSchema = z.object({
   surname: z.string(),
   username: z.string(),
   password: z.string(),
-  birthDate: parseBirthDate()
+  birthDate: parseBirthDate(),
+  sessionTimeout: z.number().optional()
 })
 
 export type CreateUserRequestDTO = z.infer<typeof CreateUserRequestSchema>;
