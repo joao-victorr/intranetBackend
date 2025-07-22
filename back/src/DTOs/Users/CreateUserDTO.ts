@@ -17,7 +17,7 @@ export type CreateUserRequestDTO = z.infer<typeof CreateUserRequestSchema>;
 
 
 export const CreateUserReplySchema = z.object({
-  id: z.string().uuid()
+  id: z.uuid()
 })
 
 export type CreateUserReplyDTO = z.infer<typeof CreateUserReplySchema>;

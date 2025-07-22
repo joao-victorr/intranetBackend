@@ -22,7 +22,8 @@ async function main() {
       surname: 'Admin',
       username: 'admin@gmail.com',
       password: hashedPassword,
-      birthDate: birthDate
+      birthDate: birthDate,
+      sessionTimeout: 300000 //5min
     },
   });
 

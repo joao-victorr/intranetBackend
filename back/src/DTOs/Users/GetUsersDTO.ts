@@ -3,7 +3,7 @@ import { z } from "zod";
 
 
 export const GetUsersReplySchema = z.array(z.object({
-    id: z.string().uuid(),
+    id: z.uuid(),
     name: z.string(),
     surname: z.string(),
     username: z.string(),

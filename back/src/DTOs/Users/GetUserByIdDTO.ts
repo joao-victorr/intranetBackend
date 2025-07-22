@@ -4,14 +4,14 @@ import { z } from "zod";
 
 
 export const GetUserByIdRequestSchema = z.object({
-  id: z.string()
+  id: z.uuid
 })
 
 export type GetUserByIdRequestDTO = z.infer<typeof GetUserByIdRequestSchema>
 
 
 export const GetUserByIdReplySchama = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string(),
   surname: z.string(),
   username: z.string(),
