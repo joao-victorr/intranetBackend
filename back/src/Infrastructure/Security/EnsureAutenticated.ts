@@ -1,6 +1,6 @@
-import { UnauthorizedError } from "@Domain/Errors/AppErrors";
-import { verifyToken } from "@Infrastructure/Auth/JWT";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { UnauthorizedError } from "../../Domain/Errors/AppErrors";
+import { verifyToken } from "../../Infrastructure/Auth/JWT";
 
 
 export async function EnsureAuthenticated(req: FastifyRequest, _reply: FastifyReply) {

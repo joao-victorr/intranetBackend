@@ -1,6 +1,6 @@
-import { BadRequestError } from "@Domain/Errors/AppErrors";
-import { repo } from "@Infrastructure/Databases/Prisma/PrismaClient";
-import type { GetUserByIdReplyDTO, GetUserByIdRequestDTO } from "DTOs/Users/GetUserByIdDTO";
+import { BadRequestError } from "../../../Domain/Errors/AppErrors";
+import type { GetUserByIdReplyDTO, GetUserByIdRequestDTO } from "../../../DTOs/Users/GetUserByIdDTO";
+import { repo } from "../../../Infrastructure/Databases/Prisma/PrismaClient";
 
 
 export class GetUserByIdService {

@@ -1,6 +1,6 @@
-import { RefreshTokenService } from "Aplications/Services/Auth/RefreshTonkenService";
-import type { RefreshTokenRequestDTO } from "DTOs/Auth/RefreshTokenDTO";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { RefreshTokenService } from "../../../Aplications/Services/Auth/RefreshTonkenService";
+import type { RefreshTokenRequestDTO } from "../../../DTOs/Auth/RefreshTokenDTO";
 
 export class RefreshTokenController {
   async handle( request: FastifyRequest, reply: FastifyReply ) {

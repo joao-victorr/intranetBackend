@@ -1,6 +1,7 @@
 // import { parseBirthDate } from "@Domain/Validators/BirthDate";
-import { parseBirthDate } from "@Domain/Validators/BirthDate";
+
 import { z } from "zod";
+import { DateZodValidator } from "../../Domain/Validators/DateZodValidator";
 
 
 export const CreateUserRequestSchema = z.object({
@@ -8,7 +9,7 @@ export const CreateUserRequestSchema = z.object({
   surname: z.string(),
   username: z.string(),
   password: z.string(),
-  birthDate: parseBirthDate(),
+  birthDate: DateZodValidator,
   sessionTimeout: z.number().optional()
 })
 
@@ -17,7 +18,7 @@ export type CreateUserRequestDTO = z.infer<typeof CreateUserRequestSchema>;
 
 
 export const CreateUserReplySchema = z.object({
-  id: z.uuid()
+  id: z.string().uuid()
 })
 
 export type CreateUserReplyDTO = z.infer<typeof CreateUserReplySchema>;

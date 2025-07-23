@@ -1,7 +1,7 @@
-import { UnauthorizedError } from "@Domain/Errors/AppErrors";
-import { signToken } from "@Infrastructure/Auth/JWT";
-import { repo } from "@Infrastructure/Databases/Prisma/PrismaClient";
-import type { RefreshTokenReplyDTO } from "DTOs/Auth/RefreshTokenDTO";
+import { UnauthorizedError } from "../../../Domain/Errors/AppErrors";
+import type { RefreshTokenReplyDTO } from "../../../DTOs/Auth/RefreshTokenDTO";
+import { signToken } from "../../../Infrastructure/Auth/JWT";
+import { repo } from "../../../Infrastructure/Databases/Prisma/PrismaClient";
 
 
 export class RefreshTokenService {
@@ -14,6 +14,7 @@ export class RefreshTokenService {
     });
 
     if (!session) {
+      console.log(session)
       throw new UnauthorizedError("Refrash Token does not exist");
     }
 
@@ -22,6 +23,10 @@ export class RefreshTokenService {
     }
 
     const now = new Date();
+
+    console.log("now: ",now);
+    console.log("expiresAt: ",session.expiresAt);
+
     if (session.expiresAt <= now) {
       throw new UnauthorizedError("Session has expired");
     }

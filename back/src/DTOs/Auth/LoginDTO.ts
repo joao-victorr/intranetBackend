@@ -1,4 +1,9 @@
 import {z} from 'zod';
+import { DateZodValidator } from '../../Domain/Validators/DateZodValidator';
+
+
+
+
 
 
 export const LoginRequestSchema = z.object({
@@ -11,10 +16,10 @@ export type LoginRequestDTO = z.infer<typeof LoginRequestSchema>
 export const LoginReplySchema = z.object({
   token: z.string(),
   refreshToken: z.object({
-    id: z.uuid(),
-    userId: z.uuid(),
-    // expiresAt: z.string(),
-    // createdAt: z.string(),
+    id: z.string().uuid(),
+    userId: z.string().uuid(),
+    expiresAt: DateZodValidator,
+    createdAt: DateZodValidator,
     isRevoked: z.boolean()
   })
 });

@@ -14,12 +14,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
   surname   String
-  username  String   @unique
+  username  String    @unique
   password  String
   birthDate DateTime
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
 
   sessionTimeout Int
   Sessions       Session[]
@@ -32,5 +34,5 @@ model Session {
   createdAt DateTime @default(now())
   isRevoked Boolean  @default(false)
 
-  User User @relation(fields: [userId], references: [id])
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -1,6 +1,6 @@
-import { UnauthorizedError } from "@Domain/Errors/AppErrors";
-import { EnvConfig } from "@Infrastructure/Config/envConfig";
 import jwt from "jsonwebtoken";
+import { UnauthorizedError } from "../../Domain/Errors/AppErrors";
+import { EnvConfig } from "../../Infrastructure/Config/envConfig";
 
 const secret = EnvConfig.JWT_SECRET;
 

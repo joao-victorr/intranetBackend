@@ -1,8 +1,8 @@
 
 
-import { CreateUserService } from "Aplications/Services/Users/CreateUserService";
-import type { CreateUserRequestDTO } from "DTOs/Users/CreateUserDTO";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { CreateUserService } from "../../../Aplications/Services/Users/CreateUserService";
+import type { CreateUserRequestDTO } from "../../../DTOs/Users/CreateUserDTO";
 
 export class CreateUserController {
   async handle( request: FastifyRequest, reply: FastifyReply ) {

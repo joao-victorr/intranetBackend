@@ -1,9 +1,9 @@
-import type { FastifyTypedInstance } from "@Types/Fastify";
-import { LoginController } from "Aplications/Controller/Auth/LoginController";
-import { RefreshTokenController } from "Aplications/Controller/Auth/RefreshTokenController";
-import { LoginReplySchema, LoginRequestSchema } from "DTOs/Auth/LoginDTO";
-import { RefreshTokenReplySchema, RefreshTokenRequestSchema } from "DTOs/Auth/RefreshTokenDTO";
-import { UnauthorizedSchema } from "DTOs/Global/ErrorsDTO";
+import { LoginController } from "../../Aplications/Controller/Auth/LoginController";
+import { RefreshTokenController } from "../../Aplications/Controller/Auth/RefreshTokenController";
+import { LoginReplySchema, LoginRequestSchema } from "../../DTOs/Auth/LoginDTO";
+import { RefreshTokenReplySchema, RefreshTokenRequestSchema } from "../../DTOs/Auth/RefreshTokenDTO";
+import { UnauthorizedSchema } from "../../DTOs/Global/ErrorsDTO";
+import type { FastifyTypedInstance } from "../..//Types/Fastify";
 
 
 const loginController = new LoginController()
@@ -30,7 +30,7 @@ export const AuthRoutes = async (server: FastifyTypedInstance) => {
   );
 
   server.post(
-    "/refrash-token",
+    "/refresh-token",
     {
       schema: {
         tags: ['Auth'],

@@ -1,20 +1,21 @@
 
 import { z } from "zod";
+import { DateZodValidator } from "../../Domain/Validators/DateZodValidator";
 
 
 export const RefreshTokenRequestSchema = z.object({
-  refreshToken: z.uuid()
+  refreshToken: z.string().uuid()
 })
 
 export type RefreshTokenRequestDTO = z.infer<typeof RefreshTokenRequestSchema>;
 
 export const RefreshTokenReplySchema = z.object({
-  token: z.jwt(),
+  token: z.string().jwt(),
   refreshToken: z.object({
-    id: z.uuid(),
-    userId: z.uuid(),
-    expiresAt: z.date(),
-    createdAt: z.date(),
+    id: z.string().uuid(),
+    userId: z.string().uuid(),
+    expiresAt: DateZodValidator,
+    createdAt: DateZodValidator,
     isRevoked: z.boolean()
   })
 })

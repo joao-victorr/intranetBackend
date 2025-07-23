@@ -1,8 +1,8 @@
-import { UnauthorizedError } from "@Domain/Errors/AppErrors";
-import { signToken } from "Infrastructure/Auth/JWT";
-import { repo } from "Infrastructure/Databases/Prisma/PrismaClient";
-import { comparePassword } from "Infrastructure/Security/EncryptionUtilit";
 import { z } from "zod";
+import { UnauthorizedError } from "../../../Domain/Errors/AppErrors";
+import { signToken } from "../../../Infrastructure/Auth/JWT";
+import { repo } from "../../../Infrastructure/Databases/Prisma/PrismaClient";
+import { comparePassword } from "../../../Infrastructure/Security/EncryptionUtilit";
 
 export const AuthRequestSchema = z.object({
   username: z.string(),
@@ -32,11 +32,15 @@ export class LoginService {
       throw new UnauthorizedError(mensageError)
     }
 
-    const token = signToken({sub: user.id});
+
+    await repo.session.updateMany({
+      where: { userId: user.id },
+      data: { isRevoked: true }
+    })
 
     
     const sevenDayInMillisecond = 604800000 //7 dias em milesegundos
-    const newExpiresAt = new Date(Date.now() + sevenDayInMillisecond);
+    const newExpiresAt = new Date(Date.now() + (user.sessionTimeout ?? sevenDayInMillisecond));
 
     const refreshToken = await repo.session.create({
       data: {
@@ -46,7 +50,9 @@ export class LoginService {
         createdAt: new Date(),
       }
     })
-    
+
+    const token = signToken({sub: user.id});
+
     return {
       token,
       refreshToken

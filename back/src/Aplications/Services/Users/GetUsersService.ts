@@ -1,5 +1,5 @@
-import { repo } from "@Infrastructure/Databases/Prisma/PrismaClient";
-import type { GetUsersReplyDTO } from "DTOs/Users/GetUsersDTO";
+import type { GetUsersReplyDTO } from "../../../DTOs/Users/GetUsersDTO";
+import { repo } from "../../../Infrastructure/Databases/Prisma/PrismaClient";
 
 
 export class GetUsersService {

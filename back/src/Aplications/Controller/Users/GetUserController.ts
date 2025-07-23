@@ -1,7 +1,7 @@
 
 
-import { GetUsersService } from "Aplications/Services/Users/GetUsersService";
 import type { FastifyReply, FastifyRequest } from "fastify";
+import { GetUsersService } from "../../../Aplications/Services/Users/GetUsersService";
 
 export class GetUserController {
   async handle( _request: FastifyRequest, reply: FastifyReply ) {
