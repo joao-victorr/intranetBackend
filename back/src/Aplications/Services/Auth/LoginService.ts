@@ -32,6 +32,12 @@ export class LoginService {
       throw new UnauthorizedError(mensageError)
     }
 
+    if (user.isDeleted) {
+      const mensageError = "User is deleted"
+      throw new UnauthorizedError(mensageError)
+
+    }
+
 
     await repo.session.updateMany({
       where: { userId: user.id },
@@ -40,7 +46,7 @@ export class LoginService {
 
     
     const sevenDayInMillisecond = 604800000 //7 dias em milesegundos
-    const newExpiresAt = new Date(Date.now() + (user.sessionTimeout ?? sevenDayInMillisecond));
+    const newExpiresAt = new Date(Date.now() + (user.sessionTimeoutInMiliseconds ?? sevenDayInMillisecond));
 
     const refreshToken = await repo.session.create({
       data: {

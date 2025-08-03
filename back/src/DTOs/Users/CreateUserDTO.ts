@@ -6,11 +6,10 @@ import { DateZodValidator } from "../../Domain/Validators/DateZodValidator";
 
 export const CreateUserRequestSchema = z.object({
   name: z.string(),
-  surname: z.string(),
   username: z.string(),
   password: z.string(),
   birthDate: DateZodValidator,
-  sessionTimeout: z.number().optional()
+  sessionTimeoutInMiliseconds: z.number().optional()
 })
 
 export type CreateUserRequestDTO = z.infer<typeof CreateUserRequestSchema>;

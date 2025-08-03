@@ -35,7 +35,6 @@ export class UnauthorizedError extends AppError { // Nome corrigido
   }
 };
 
-// Exemplo de um erro 403 Forbidden, se precisar
 export class ForbiddenError extends AppError {
   constructor(message: string) {
     super(403, message);

@@ -22,12 +22,7 @@ export class RefreshTokenService {
       throw new UnauthorizedError("Session has been revoked");
     }
 
-    const now = new Date();
-
-    console.log("now: ",now);
-    console.log("expiresAt: ",session.expiresAt);
-
-    if (session.expiresAt <= now) {
+    if (session.expiresAt <= new Date()) {
       throw new UnauthorizedError("Session has expired");
     }
 
@@ -44,8 +39,9 @@ export class RefreshTokenService {
       throw new UnauthorizedError("User not found");
     }
 
-    const sevenDayInMillisecond = 604800000 //7 dias em milesegundos
-    const newExpiresAt = new Date(Date.now() + sevenDayInMillisecond);
+    const userSessionTimeout = user.sessionTimeoutInMiliseconds
+
+    const newExpiresAt = new Date(Date.now() + userSessionTimeout);
 
     const refreshToken = await repo.session.create({
       data: {

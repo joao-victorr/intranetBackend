@@ -13,9 +13,11 @@ export type GetUserByIdRequestDTO = z.infer<typeof GetUserByIdRequestSchema>
 export const GetUserByIdReplySchama = z.object({
   id: z.string().uuid(),
   name: z.string(),
-  surname: z.string(),
   username: z.string(),
-  birthDate: DateZodValidator
+  birthDate: DateZodValidator,
+  isDeleted: z.boolean(),
+  deletedAt: DateZodValidator.nullable(),
+  sessionTimeoutInMiliseconds: z.number().int().min(0),
 })
 
 export type GetUserByIdReplyDTO = z.infer<typeof GetUserByIdReplySchama>;

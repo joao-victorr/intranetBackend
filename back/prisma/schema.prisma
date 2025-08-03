@@ -16,15 +16,17 @@ datasource db {
 model User {
   id        String    @id @default(uuid())
   name      String
-  surname   String
   username  String    @unique
   password  String
   birthDate DateTime
   isDeleted Boolean   @default(false)
   deletedAt DateTime?
 
-  sessionTimeout Int
-  Sessions       Session[]
+  sessionTimeoutInMiliseconds Int              @default(604800000) // 7 days in milliseconds
+  Sessions                    Session[]
+  roleId                      String?
+  Role                        Role?            @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permissions                 UserPermission[]
 }
 
 model Session {
@@ -35,4 +37,43 @@ model Session {
   isRevoked Boolean  @default(false)
 
   User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String?
+  createdAt   DateTime         @default(now())
+  permissions RolePermission[]
+  users       User[]
+}
+
+model Permission {
+  id          String  @id @default(uuid())
+  name        String  @unique
+  description String?
+
+  createdAt      DateTime         @default(now())
+  roles          RolePermission[]
+  UserPermission UserPermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+}
+
+model UserPermission {
+  id           String @id @default(uuid())
+  userId       String
+  permissionId String
+
+  User       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, permissionId])
 }

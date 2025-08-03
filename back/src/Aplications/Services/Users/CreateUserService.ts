@@ -24,11 +24,10 @@ export class CreateUserService {
     const newUser = await repo.user.create({
       data: {
         name: user.name,
-        surname: user.surname,
         username: user.username,
         password: passwordhash,
         birthDate: user.birthDate,
-        sessionTimeout: user.sessionTimeout ?? defaultSessionTimeoutInMilliseconds
+        sessionTimeoutInMiliseconds: user.sessionTimeoutInMiliseconds ?? defaultSessionTimeoutInMilliseconds
 
       },
       omit: {

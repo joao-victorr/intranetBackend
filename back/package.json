@@ -10,7 +10,7 @@
     "deploy": "npx prisma migrate deploy",
     "build": "npx tsc",
     "lint": "biome check",
-    "dev-seed": "npx tsx src/Infrastructure/Databases/Prisma/seed.ts",
+    "dev-seed": "npx tsx src/Infrastructure/Seeds/seed.ts",
     "seed": "node dist/Infrastructure/Databases/Prisma/seed.js",
     "prod": "npm run deploy & npm run seed & npm start "
   },
