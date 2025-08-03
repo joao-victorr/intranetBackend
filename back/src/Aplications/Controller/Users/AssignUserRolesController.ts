@@ -7,10 +7,10 @@ import { AssingUserRolesService } from "../../Services/Users/AssignUserRolesServ
 export class AssignUserRolesController {
   async handle( request: FastifyRequest, reply: FastifyReply ) {
     const { userId } = request.params as AssignUserRolesRequestParamsDTO;
-    const { roleId } = request.body as AssignUserRolesRequestBodyDTO;
+    const { roles } = request.body as AssignUserRolesRequestBodyDTO;
 
     const service = new AssingUserRolesService();
-    const result = await service.execute({ userId, roleId });
+    const result = await service.execute({ userId, roles });
     return reply.status(200).send(result);
 
   }

@@ -1,6 +1,7 @@
 services:
   # Serviço para o seu Backend Node.js
   intranet-backend:
+    container_name: intranet-backend
     # image: intranet-back:latest
     build:
       context: ./back
@@ -13,24 +14,11 @@ services:
       - intranet-database # Garante que o banco de dados seja iniciado antes do backend
     networks:
       - app-network # Conecta o backend à rede compartilhada
-      - nginx-proxy-net
 
-  # Serviço para o Frontend (Aplicativo React servido por Nginx)
-  # intranet-frontend:
-      #image: intranet-front:latest
-  #   # Não precisamos mais expor a porta 80 aqui, pois o proxy reverso fará isso
-  #   # ports:
-  #   #   - "80:80"
-  #   env_file:
-  #     - .front.env # Opcional: Se o frontend precisar de variáveis de ambiente via .env
-  #   depends_on:
-  #     - intranet-backend # Opcional: Garante que o backend seja iniciado antes do frontend
-  #   networks:
-  #     - app-network # Conecta o frontend à rede compartilhada principal do stack
-  #     - nginx-proxy-net # Adiciona o frontend à rede 'nginx-proxy' para ser acessível pelo proxy reverso
 
   # Serviço para o Banco de Dados PostgreSQL
   intranet-database:
+    container_name: intranet-database
     # image: postgres:13 # Usamos uma versão específica do PostgreSQL para consistência
     image: postgres:13
     env_file:
@@ -49,5 +37,4 @@ volumes:
 networks:
   app-network:
     driver: bridge # O driver 'overlay' é necessário para comunicação entre serviços em um cluster Swarm
-  nginx-proxy-net:
-    external: true # Indica que esta rede já existe e não deve ser criada pelo stack
+

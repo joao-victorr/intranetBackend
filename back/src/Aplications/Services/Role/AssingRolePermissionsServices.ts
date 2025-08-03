@@ -11,7 +11,7 @@ export class AssingRolePermissionsServices {
         id: roleId
       },
       include: {
-        permissions: true
+        RolePermissions: true
       }
     })
 
@@ -33,7 +33,7 @@ export class AssingRolePermissionsServices {
       throw new BadRequestError("Some permissions do not exist");
     }
 
-    const permissionToAssing = permissions.filter(permissionsId => !role.permissions.some(permission => permission.permissionId === permissionsId));
+    const permissionToAssing = permissions.filter(permissionsId => !role.RolePermissions.some(permission => permission.permissionId === permissionsId));
 
 
     await repo.rolePermission.createMany({

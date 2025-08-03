@@ -4,37 +4,62 @@ import { repo } from "../../../Infrastructure/Databases/Prisma/PrismaClient";
 
 
 export class AssingUserRolesService {
-  async execute({ userId, roleId }: AssignUserRolesRequestDTO): Promise<AssignUserRolesReplyDTO> {
-    // Here you would typically interact with your database or service to create the user role
-    // For example:
-    // const newRole = await this.userRoleService.createUserRole(userId, roleId);
-
-    const userExists = await repo.user.findUnique({
-      where: { id: userId }
-    });
-    if (!userExists) {
-      throw new BadRequestError("User does not exist");
-    }
-
-    const roleExists = await repo.role.findUnique({
-      where: { id: roleId }
-    });
-    if (!roleExists) {
-      throw new BadRequestError("Role does not exist");
-    }
-
-    await repo.user.update({
-      where: { id: userId },
-      data: {
-        roleId: roleId
+  async execute({ userId, roles }: AssignUserRolesRequestDTO): Promise<AssignUserRolesReplyDTO> {
+    const user = await repo.user.findUnique({
+      where: {
+        id: userId
+      },
+      include: {
+        UserRoles: true
       }
     })
-    
-    // Simulating a successful response
-    return {
-      success: true,
-      message: `Role ${roleId} assigned to user ${userId}`
+
+    if (!user) {
+      throw new BadRequestError("User not found");
     }
+
+    const existingRoles = await repo.role.findMany({
+      where: {
+        id: {
+          in: roles
+        }
+      },
+      select: {
+        id: true
+      }
+    });
+
+    console.log("teste");
+
+    if (existingRoles.length !== roles.length) {
+      throw new BadRequestError("Some Roles do not exist");
+    }
+
     
+
+    const permissionToAssing = roles.filter(RolesId => !user.UserRoles.some(permission => permission.roleId === RolesId));
+
+
+    await repo.userRole.createMany({
+      data: permissionToAssing.map(roleId => ({
+        userId,
+        roleId
+      })),
+      skipDuplicates: true
+    });
+
+    const userRoles = await repo.userRole.findMany({
+      where: {
+        userId
+      },
+      select: {
+        roleId: true
+      }
+    });
+
+    return {
+      userId,
+      roles: userRoles.map(roles => roles.roleId)
+    }
   }
 }

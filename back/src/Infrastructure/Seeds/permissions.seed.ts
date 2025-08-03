@@ -1,7 +1,7 @@
 // src/Infrastructure/Seeds/permissions.seed.ts
 
 import type { PrismaClient } from "@prisma/client/extension";
-import { listAllPermissions } from "../../Domain/Permissions/PermissionGroup";
+import { listAllPermissions } from "../../Domain/AccessControl/Permissions/PermissionGroup";
 
 export const seedPermissions = async (repo: PrismaClient) =>{
 

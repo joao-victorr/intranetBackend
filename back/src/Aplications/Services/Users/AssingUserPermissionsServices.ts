@@ -11,12 +11,13 @@ export class AssingUserPermissionsServices {
         id: userId
       },
       include: {
-        permissions: true
+        UserPermissions: true
       }
     })
 
+
     if (!user) {
-      throw new BadRequestError("Role not found");
+      throw new BadRequestError("User not found");
     }
 
     const existingPermissions = await repo.permission.findMany({
@@ -29,11 +30,12 @@ export class AssingUserPermissionsServices {
         id: true
       }
     });
+
     if (existingPermissions.length !== permissions.length) {
       throw new BadRequestError("Some permissions do not exist");
     }
 
-    const permissionToAssing = permissions.filter(permissionsId => !user.permissions.some(permission => permission.permissionId === permissionsId));
+    const permissionToAssing = permissions.filter(permissionsId => !user.UserPermissions.some(permission => permission.permissionId === permissionsId));
 
 
     await repo.userPermission.createMany({
@@ -44,7 +46,7 @@ export class AssingUserPermissionsServices {
       skipDuplicates: true
     });
 
-    const rolePermissions = await repo.userPermission.findMany({
+    const userPermissions = await repo.userPermission.findMany({
       where: {
         userId
       },
@@ -55,7 +57,7 @@ export class AssingUserPermissionsServices {
 
     return {
       userId,
-      permissions: rolePermissions.map(permission => permission.permissionId)
+      permissions: userPermissions.map(permission => permission.permissionId)
     }
   }
 }

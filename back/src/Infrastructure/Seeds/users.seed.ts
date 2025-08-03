@@ -1,6 +1,6 @@
 import type { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { GlobalPermissions } from '../../Domain/Permissions/GlobalPermissions';
+import { GlobalPermissions } from '../../Domain/AccessControl/Permissions/GlobalPermissions';
 
 export const createDefaultAdminUser = async (repo: PrismaClient) => {
   const count = await repo.user.count();

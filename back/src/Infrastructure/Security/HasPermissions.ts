@@ -1,11 +1,5 @@
-
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { repo } from "../Databases/Prisma/PrismaClient";
-
-// 1. Extrai o userId do token JWT (ou de qualquer contexto da sua app);
-// 2. Busca as permissões da Role do usuário e também permissões personalizadas (UserPermission);
-// 3. Verifica se ele possui a permissão exigida pela rota;
-// 4. Se não tiver, bloqueia com 403 Forbidden.
 
 export function HasPermission(requiredPermission: string) {
   return async (request: FastifyRequest, reply: FastifyReply) => {
@@ -22,15 +16,23 @@ export function HasPermission(requiredPermission: string) {
     const user = await repo.user.findUnique({
       where: { id: userId },
       include: {
-        Role: {
+        UserRoles: {
           include: {
-            permissions: {
-              include: { permission: true }, // remove o filtro aqui
+            Roles: {
+              include: {
+                RolePermissions: {
+                  include: {
+                    permission: true,
+                  },
+                },
+              },
             },
           },
         },
-        permissions: {
-          include: { Permission: true }, // remove o filtro aqui também
+        UserPermissions: {
+          include: {
+            Permission: true,
+          },
         },
       },
     });
@@ -39,11 +41,13 @@ export function HasPermission(requiredPermission: string) {
       return reply.status(401).send({ message: "Usuário não encontrado" });
     }
 
-    const rolePermissions = user.Role?.permissions.map((rp) => rp.permission.name) || [];
-    const userPermissions = user.permissions.map((up) => up.Permission.name);
+    const rolePermissions = user.UserRoles.flatMap((ur) =>
+      ur.Roles.RolePermissions.map((rp) => rp.permission.name)
+    );
+
+    const userPermissions = user.UserPermissions.map((up) => up.Permission.name);
 
     const allPermissions = new Set([...rolePermissions, ...userPermissions]);
-    
 
     const hasResourceFull = allPermissions.has(`${resource}.full`);
     const hasSpecific = allPermissions.has(requiredPermission);
@@ -51,7 +55,6 @@ export function HasPermission(requiredPermission: string) {
 
     if (isSuperadmin || hasResourceFull || hasSpecific) return;
 
-    // Sem permissão
     return reply.status(403).send({ message: "Permissão negada" });
   };
 }

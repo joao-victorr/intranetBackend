@@ -12,3 +12,4 @@ export const GlobalPermissions = {
   roles: RolePermissions,
   permissions: PermissionPermissions
 } as const;
+

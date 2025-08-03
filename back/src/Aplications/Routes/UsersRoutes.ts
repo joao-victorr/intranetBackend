@@ -1,7 +1,7 @@
 import { CreateUserByIdController } from "../../Aplications/Controller/Users/CreateUserByIdController";
 import { CreateUserController } from "../../Aplications/Controller/Users/CreateUserController";
 import { GetUserController } from "../../Aplications/Controller/Users/GetUserController";
-import { GlobalPermissions } from "../../Domain/Permissions/GlobalPermissions";
+import { GlobalPermissions } from "../../Domain/AccessControl/Permissions/GlobalPermissions";
 import { BadRequestSchema, UnauthorizedSchema } from "../../DTOs/Global/ErrorsDTO";
 import { AssignUserRoleReplySchema, AssignUserRolesRequestBodySchema, AssignUserRolesRequestParamsSchema } from "../../DTOs/Users/AssignUserRoleDTO";
 import { AssingUserPermissionsReplySchema, AssingUserPermissionsRequestBodySchema, AssingUserPermissionsRequestParamsSchema } from "../../DTOs/Users/AssingUserPermissionDTO";
@@ -53,7 +53,7 @@ export const UsersRoutes = async (server: FastifyTypedInstance) => {
   server.get(
     "/",
     {
-      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.users.read.name)],
+      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.users.list.name)],
       schema: {
         tags: ["User"],
         operationId: "Get.Users",
@@ -74,7 +74,7 @@ export const UsersRoutes = async (server: FastifyTypedInstance) => {
   server.get(
     "/:id",
     {
-      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.users.read.name)],
+      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.users.viewer.name)],
       schema: {
         tags: ["User"],
         operationId: "Get.User.By.Id",

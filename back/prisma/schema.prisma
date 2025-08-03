@@ -14,19 +14,21 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
-  username  String    @unique
+  username  String   @unique
   password  String
   birthDate DateTime
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   isDeleted Boolean   @default(false)
   deletedAt DateTime?
 
   sessionTimeoutInMiliseconds Int              @default(604800000) // 7 days in milliseconds
   Sessions                    Session[]
-  roleId                      String?
-  Role                        Role?            @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permissions                 UserPermission[]
+  UserPermissions             UserPermission[]
+  UserRoles                   UserRole[]
 }
 
 model Session {
@@ -40,12 +42,25 @@ model Session {
 }
 
 model Role {
-  id          String           @id @default(uuid())
-  name        String           @unique
+  id          String   @id @default(uuid())
+  name        String   @unique
   description String?
-  createdAt   DateTime         @default(now())
-  permissions RolePermission[]
-  users       User[]
+  createdAt   DateTime @default(now())
+
+  RolePermissions RolePermission[]
+  UserRoles       UserRole[]
+}
+
+model UserRole {
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Users User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Roles Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
 }
 
 model Permission {
@@ -53,16 +68,17 @@ model Permission {
   name        String  @unique
   description String?
 
-  createdAt      DateTime         @default(now())
-  roles          RolePermission[]
-  UserPermission UserPermission[]
+  createdAt       DateTime         @default(now())
+  RolesPermission RolePermission[]
+  UsersPermission UserPermission[]
 }
 
 model RolePermission {
   roleId       String
   permissionId String
-  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
 
   @@id([roleId, permissionId])
 }

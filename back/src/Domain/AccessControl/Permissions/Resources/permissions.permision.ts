@@ -1,8 +1,8 @@
 
 
 export const PermissionPermissions = {
-  read: {
-    name: "permissions.read",
+  viewer: {
+    name: "permissions.viewer",
     description: "Permite ler permissões.",
   }
 } as const

@@ -1,4 +1,4 @@
-import { GlobalPermissions } from "../../Domain/Permissions/GlobalPermissions";
+import { GlobalPermissions } from "../../Domain/AccessControl/Permissions/GlobalPermissions";
 import { BadRequestSchema, UnauthorizedSchema } from "../../DTOs/Global/ErrorsDTO";
 import { AssingRolePermissionsReplySchema, AssingRolePermissionsRequestBodySchema, AssingRolePermissionsRequestParamsSchema } from "../../DTOs/Roles/AssingRolePermissionDTO";
 import { CreateRoleReplySchema, CreateRoleRequestSchama } from "../../DTOs/Roles/CreateRoleDTO";
@@ -18,7 +18,7 @@ export const RoleRoutes = async (server: FastifyTypedInstance) => {
   server.post(
     "/",
     {
-      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.roles.create.name)],
+      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.roles.viewer.name)],
       schema: {
         tags: ["Role"],
         operationId: "Create.Role",
@@ -38,7 +38,7 @@ export const RoleRoutes = async (server: FastifyTypedInstance) => {
   server.put(
     "/:roleId/permissions",
     {
-      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.roles.assignPermissions.name)],
+      preHandler: [EnsureAuthenticated, HasPermission(GlobalPermissions.roles.viewer.name)],
       schema: {
         tags: ["Role"],
         operationId: "Assing.Role.Permissions",

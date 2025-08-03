@@ -1,5 +1,5 @@
 
-import { GlobalPermissions } from "../../Domain/Permissions/GlobalPermissions";
+import { GlobalPermissions } from "../../Domain/AccessControl/Permissions/GlobalPermissions";
 import { BadRequestSchema, UnauthorizedSchema } from "../../DTOs/Global/ErrorsDTO";
 import { CreatePermissionReplySchema, CreatePermissionRequestSchama } from "../../DTOs/Permissions/CreatePermissionDTO";
 import { EnsureAuthenticated } from "../../Infrastructure/Security/EnsureAutenticated";

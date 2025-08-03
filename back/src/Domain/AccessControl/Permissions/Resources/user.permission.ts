@@ -17,8 +17,8 @@ export const UserPermissions = {
     name: "users.create",
     description: "Pode criar novos usuários.",
   },
-  read: {
-    name: "users.read",
+  viewer: {
+    name: "users.viwer",
     description: "Pode visualizar detalhes de usuários.",
   },
   update: {

@@ -8,7 +8,7 @@ export type AssignUserRolesRequestParamsDTO = z.infer<typeof AssignUserRolesRequ
 
 
 export const AssignUserRolesRequestBodySchema = z.object({
-  roleId: z.string().uuid(),
+  roles: z.array(z.string().uuid()),
 })
 export type AssignUserRolesRequestBodyDTO = z.infer<typeof AssignUserRolesRequestBodySchema>;
 
@@ -18,7 +18,7 @@ export type AssignUserRolesRequestDTO = z.infer<typeof AssignUserRolesRequestSch
 
 
 export const AssignUserRoleReplySchema = z.object({
-  success: z.literal(true),
-  message: z.string()
+  userId: z.string().uuid(),
+  roles: z.array(z.string().uuid()),
 });
 export type AssignUserRolesReplyDTO = z.infer<typeof AssignUserRoleReplySchema>;

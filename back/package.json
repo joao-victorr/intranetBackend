@@ -11,7 +11,7 @@
     "build": "npx tsc",
     "lint": "biome check",
     "dev-seed": "npx tsx src/Infrastructure/Seeds/seed.ts",
-    "seed": "node dist/Infrastructure/Databases/Prisma/seed.js",
+    "seed": "node dist/Infrastructure/Seeds/seed.js",
     "prod": "npm run deploy & npm run seed & npm start "
   },
   "author": "",
