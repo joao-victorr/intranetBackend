@@ -86,5 +86,6 @@ CLOUDINARY_API_SECRET="CLOUDINARY_API_SECRET"
 - O backend exige variáveis de ambiente válidas para funcionar.
 - O sistema de permissões e roles é totalmente customizável via código e seeds.
 - O projeto já está pronto para deploy em produção via Docker.
+- **Usuário padrão:** ao rodar o seed, será criado um usuário administrador com o usuário `admin` e senha `admin`.
 
 ---

@@ -13,8 +13,8 @@ export const createDefaultAdminUser = async (repo: PrismaClient) => {
 
   const defaultUser = await repo.user.create({
     data: {
-      name: 'TI',
-      username: 'admin@gmail.com',
+      name: 'Admin',
+      username: 'admin',
       password: hashedPassword,
       birthDate: new Date('2000-01-01'),
       sessionTimeoutInMiliseconds: 300000,
