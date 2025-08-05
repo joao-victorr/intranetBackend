@@ -40,7 +40,7 @@ CLOUDINARY_API_SECRET="CLOUDINARY_API_SECRET"
 
 1. **Clone o repositório e acesse a pasta:**
    ```sh
-   git clone <repo-url>
+   git clone https://github.com/joao-victorr/intranetBackend.git
    cd intranetBackend
    ```
 
