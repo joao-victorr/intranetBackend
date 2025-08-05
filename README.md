@@ -25,6 +25,8 @@ Backend para sistema de Intranet, desenvolvido em Node.js, TypeScript, Fastify e
 
 Antes de rodar o projeto, configure as seguintes variáveis de ambiente nos arquivos `.back.env` e `.database.env`:
 
+### `.back.env`
+
 ```env
 DATABASE_URL="postgresql://usuario:senha@localhost/nome_do_banco"
 NODE_ENV="development"
@@ -34,6 +36,14 @@ URL_FRONT="*"
 CLOUDINARY_CLOUD_NAME="CLOUDINARY_CLOUD_NAME"
 CLOUDINARY_API_KEY="CLOUDINARY_API_KEY"
 CLOUDINARY_API_SECRET="CLOUDINARY_API_SECRET"
+```
+
+### `.database.env`
+
+```env
+POSTGRES_DB="db_name"
+POSTGRES_USER="user_name"
+POSTGRES_PASSWORD="password"
 ```
 
 ## Como rodar localmente

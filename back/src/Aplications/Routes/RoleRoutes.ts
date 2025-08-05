@@ -21,6 +21,9 @@ export const RoleRoutes = async (server: FastifyTypedInstance) => {
         operationId: "Get.All.Role",
         summary: "Get all role",
         description: "Get all roles",
+        security: [{
+          bearerAuth: []
+        }],
         response: {
           200: GetAllRolesReplySchema,
           400: BadRequestSchema,

@@ -20,6 +20,9 @@ export const PermissionRoutes = async (server: FastifyTypedInstance) => {
         operationId: "Get.Permission",
         summary: "Get Permission",
         description: "Get all permissions",
+        security: [{
+          bearerAuth: []
+        }],
         response: {
           200: GetAllPermissionSchema,
           400: BadRequestSchema,
