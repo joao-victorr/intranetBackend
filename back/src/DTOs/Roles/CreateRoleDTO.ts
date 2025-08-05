@@ -2,18 +2,15 @@ import z from "zod";
 import { DateZodValidator } from "../../Domain/Validators/DateZodValidator";
 
 
-export const CreateRoleRequestSchama = z.object({
-  name: z.string().min(1, "Name is required"),
-  description: z.string().nullish(),
-})
-
-export type CreateRoleRequestDTO = z.infer<typeof CreateRoleRequestSchama>;
-
-export const CreateRoleReplySchema = z.object({
+export const GetAllRolesReplySchema = z.array(z.object({
   id: z.string().uuid(),
-  name: z.string(),
-  description: z.string().nullable(),
-  createdAt: DateZodValidator,
-})
+  name: z.string().min(1).max(100),
+  description: z.string().max(255).nullable(),
+  permissions: z.array(z.object({
+    id: z.string().uuid(),
+    name: z.string().min(1).max(100),
+    description: z.string().max(255).nullable()
+  }))
+}))
 
-export type CreateRoleReplyDTO = z.infer<typeof CreateRoleReplySchema>;
+export type GetAllRolesReplyDTO = z.infer<typeof GetAllRolesReplySchema>;

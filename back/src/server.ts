@@ -34,16 +34,12 @@ if (!isProd) {
       info: {
         title: "Fastify Zod Example",
         description: "API Intranet Perdomo Doces",
-        version: "0.1",
+        version: "1.0",
       },
       servers: [
         {
           url: "http://0.0.0.0:3000",
           description: "Desenvolvimento",
-        },
-        {
-          url: "https://0.0.0.0:3000",
-          description: "Teste HTTPS",
         },
       ],
       components: {

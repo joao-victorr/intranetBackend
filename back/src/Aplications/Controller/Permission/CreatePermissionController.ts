@@ -1,15 +1,13 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { CreatePermissionRequestDTO } from "../../../DTOs/Permissions/CreatePermissionDTO";
-import { CreatePermissionService } from "../../Services/Permission/CreatePermissionService";
+import { GetAllPermissionService } from "../../Services/Permission/CreatePermissionService";
 
 export class CreatePermissionController {
-  async handle( request: FastifyRequest, reply: FastifyReply ) {
-    const { name, description } = request.body as CreatePermissionRequestDTO
+  async handle( _request: FastifyRequest, reply: FastifyReply ) {
 
-    const service = new CreatePermissionService();
+    const service = new GetAllPermissionService();
 
-    const permission = await service.execute({ name, description });
+    const permission = await service.execute();
 
-    return reply.status(201).send(permission);
+    return reply.status(200).send(permission);
   }
 }

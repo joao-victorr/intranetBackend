@@ -1,17 +1,15 @@
 
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { CreateRoleRequestDTO } from "../../../DTOs/Roles/CreateRoleDTO";
-import { CreateRoleService } from "../../Services/Role/CreateRoleService";
+import { GetAllRoleService } from "../../Services/Role/CreateRoleService";
 
 export class CreateRoleController {
-  async handle( request: FastifyRequest, reply: FastifyReply ) {
-    const { name, description } = request.body as CreateRoleRequestDTO
+  async handle( _request: FastifyRequest, reply: FastifyReply ) {
 
-    const service = new CreateRoleService();
+    const service = new GetAllRoleService();
 
-    const role = await service.execute({ name, description });
+    const role = await service.execute();
 
-    return reply.status(201).send(role);
+    return reply.status(200).send(role);
     
   }
 }

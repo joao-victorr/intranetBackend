@@ -17,18 +17,13 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "_moduleAliases": {
-    "@Routes": "dist/Aplications/Routes/",
-    "@Types": "dist/Types",
-    "@Domain": "dist/Domain",
-    "@Infrastructure": "dist/Infrastructure"
-  },
   "dependencies": {
     "@fastify/cors": "^11.0.1",
     "@fastify/swagger": "^9.5.1",
     "@fastify/swagger-ui": "^5.2.3",
     "@prisma/client": "^6.12.0",
     "bcrypt": "^6.0.0",
+    "cloudinary": "^2.7.0",
     "dotenv": "^17.2.0",
     "fastify": "^5.4.0",
     "fastify-type-provider-zod": "^4.0.2",

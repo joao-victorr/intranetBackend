@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "avatarUrl" TEXT,
+ALTER COLUMN "updatedAt" SET DEFAULT CURRENT_TIMESTAMP;

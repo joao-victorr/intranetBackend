@@ -1,25 +1,18 @@
-import { BadRequestError } from "../../../Domain/Errors/AppErrors";
-import type { CreatePermissionReplyDTO, CreatePermissionRequestDTO } from "../../../DTOs/Permissions/CreatePermissionDTO";
+
+import type { GetAllPermissionDTO } from "../../../DTOs/Permissions/GetAllPermissionDTO";
 import { repo } from "../../../Infrastructure/Databases/Prisma/PrismaClient";
 
-export class CreatePermissionService {
-  async execute({name, description}: CreatePermissionRequestDTO ): Promise<CreatePermissionReplyDTO> {
-    const permissionExists = await repo.permission.findUnique({
-      where: { name },
-    });
-
-    if (permissionExists) {
-      throw new BadRequestError("Permission already exists");
-    }
-
-    const permission = await repo.permission.create({
-      data: {
-        name,
-        description,
+export class GetAllPermissionService {
+  async execute(): Promise<GetAllPermissionDTO> {
+    const permissions = await repo.permission.findMany({
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        createdAt: true,
       },
     });
 
-    return permission;
-    
+    return permissions;
   }
 }

@@ -9,6 +9,9 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
   DATABASE_URL: z.string(),
   URL_FRONT: z.string().min(1, "URL_FRONT is required"), // Torna obrigatório em qualquer ambiente
+  CLOUDINARY_CLOUD_NAME: z.string().min(1, "CLOUDINARY_CLOUD_NAME is required"),
+  CLOUDINARY_API_KEY: z.string().min(1, "CLOUDINARY_API_KEY is required"),
+  CLOUDINARY_API_SECRET: z.string().min(1, "CLOUDINARY_API_SECRET is required"),
 }).superRefine((data, ctx) => {
   if (data.NODE_ENV === "production") {
     // Se estiver em produção, valida se é uma URL válida
@@ -36,3 +39,8 @@ if (!envParsed.success) {
 
 // Exporta as variáveis validadas
 export const EnvConfig = envParsed.data;
+
+
+// CLOUDINARY_CLOUD_NAME=dn4te44ha
+// CLOUDINARY_API_KEY=143967692713356
+// CLOUDINARY_API_SECRET=Hq5Z1_otU-1p9GCJQjYUuC3n0vo
