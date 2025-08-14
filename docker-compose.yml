@@ -14,6 +14,7 @@ services:
       - intranet-database # Garante que o banco de dados seja iniciado antes do backend
     networks:
       - intranet-network # Conecta o backend à rede compartilhada
+      - proxy-intranet-network
 
 
   # Serviço para o Banco de Dados PostgreSQL
