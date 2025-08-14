@@ -38,4 +38,8 @@ networks:
   intranet-network:
     driver: bridge
     name: intranet-network
+  
+  proxy-intranet-network:
+    driver: bridge
+    name: proxy-intranet-network
 
