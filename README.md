@@ -28,7 +28,7 @@ Antes de rodar o projeto, configure as seguintes variáveis de ambiente nos arqu
 ### `.back.env`
 
 ```env
-DATABASE_URL="postgresql://usuario:senha@localhost/nome_do_banco"
+DATABASE_URL="postgresql://db_user_name:db_password@intranet-database/db_name"
 NODE_ENV="development"
 JWT_SECRET="secure_key"
 URL_FRONT="*"
@@ -42,8 +42,8 @@ CLOUDINARY_API_SECRET="CLOUDINARY_API_SECRET"
 
 ```env
 POSTGRES_DB="db_name"
-POSTGRES_USER="user_name"
-POSTGRES_PASSWORD="password"
+POSTGRES_USER="db_user_name"
+POSTGRES_PASSWORD="db_password"
 ```
 
 ## Como rodar localmente

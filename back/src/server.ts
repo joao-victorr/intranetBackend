@@ -32,15 +32,20 @@ if (!isProd) {
   server.register(fastifySwagger, {
     openapi: {
       info: {
-        title: "Fastify Zod Example",
-        description: "API Intranet Perdomo Doces",
+        title: "Perdomo Doces Intranet API",
+        description: "API interna para gerenciamento de usuários, conteúdos e operações da intranet da Perdomo Doces.",
         version: "1.0",
       },
       servers: [
         {
-          url: "http://0.0.0.0:3000",
-          description: "Desenvolvimento",
+          url: EnvConfig.URL,
+          description: EnvConfig.NODE_ENV,
         },
+        {
+          url: `http://localhost:${_PORT}`,
+          description: "Local Development Server",
+        },
+
       ],
       components: {
         securitySchemes: {
@@ -63,7 +68,7 @@ if (!isProd) {
 }
 
 server.register(fastifyCors, {
-  origin: !isProd ? '*' : EnvConfig.URL_FRONT
+  origin: isProd ? EnvConfig.URL : '*'
 })
 
 server.setErrorHandler(ErrorsHandler);

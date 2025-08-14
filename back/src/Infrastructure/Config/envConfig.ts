@@ -5,10 +5,10 @@ dotenv.config()
 
 // Define o esquema esperado para as variáveis de ambiente
 const envSchema = z.object({
-  NODE_ENV: z.enum(["development", "production"]),
+  NODE_ENV: z.enum(["development", "test", "production"]),
   JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
   DATABASE_URL: z.string(),
-  URL_FRONT: z.string().min(1, "URL_FRONT is required"), // Torna obrigatório em qualquer ambiente
+  URL: z.string().min(1, "URL_FRONT is required"), // Torna obrigatório em qualquer ambiente
   CLOUDINARY_CLOUD_NAME: z.string().min(1, "CLOUDINARY_CLOUD_NAME is required"),
   CLOUDINARY_API_KEY: z.string().min(1, "CLOUDINARY_API_KEY is required"),
   CLOUDINARY_API_SECRET: z.string().min(1, "CLOUDINARY_API_SECRET is required"),
@@ -16,12 +16,12 @@ const envSchema = z.object({
   if (data.NODE_ENV === "production") {
     // Se estiver em produção, valida se é uma URL válida
     try {
-      new URL(data.URL_FRONT); // Tenta criar uma URL para validar o formato
+      new URL(data.URL); // Tenta criar uma URL para validar o formato
     } catch (e) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "URL_FRONT must be a valid URL in production environment.",
-        path: ["URL_FRONT"],
+        path: ["URL"],
       });
     }
   }

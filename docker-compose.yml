@@ -7,13 +7,13 @@ services:
       context: ./back
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # Mapeia a porta 3000 do host para a porta 3000 do contêiner
+      - "3000" # Mapeia a porta 3000 do host para a porta 3000 do contêiner
     env_file:
       - .back.env # Caminho para o arquivo .env do backend
     depends_on:
       - intranet-database # Garante que o banco de dados seja iniciado antes do backend
     networks:
-      - app-network # Conecta o backend à rede compartilhada
+      - intranet-network # Conecta o backend à rede compartilhada
 
 
   # Serviço para o Banco de Dados PostgreSQL
@@ -26,7 +26,7 @@ services:
     volumes:
       - ./db_data:/var/lib/postgresql/data # Volume persistente para os dados do banco de dados
     networks:
-      - app-network # Conecta o banco de dados à rede compartilhada
+      - intranet-network # Conecta o banco de dados à rede compartilhada
     # restart: unless-stopped # Opcional: Política de reinício para produção
 
 # Definição dos volumes persistentes
@@ -35,6 +35,7 @@ volumes:
 
 # Definição das redes
 networks:
-  app-network:
-    driver: bridge # O driver 'overlay' é necessário para comunicação entre serviços em um cluster Swarm
+  intranet-network:
+    driver: bridge
+    name: intranet-network
 
